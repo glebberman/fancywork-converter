@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: embroidery_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./php/public:/var/www/html:ro
+      - shared-storage:/var/www/storage
+    depends_on:
+      - php
+    networks:
+      - embroidery-network
+
+  php:
+    build: ./php
+    container_name: embroidery_php
+    volumes:
+      - ./php:/var/www
+      - shared-storage:/var/www/storage
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - STORAGE_PATH=/var/www/storage
+    depends_on:
+      - redis
+    networks:
+      - embroidery-network
+
+  python-worker:
+    build: ./python
+    container_name: embroidery_worker
+    volumes:
+      - ./python:/app
+      - shared-storage:/storage
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis
+    networks:
+      - embroidery-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: embroidery_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - embroidery-network
+    volumes:
+      - redis-data:/data
+
+networks:
+  embroidery-network:
+    driver: bridge
+
+volumes:
+  shared-storage:
+    driver: local
+  redis-data:
+    driver: local

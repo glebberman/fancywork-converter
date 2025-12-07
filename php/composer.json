@@ -1,0 +1,13 @@
+{
+    "name": "embroidery-converter/php-app",
+    "description": "PHP backend for embroidery converter",
+    "require": {
+        "php": "^8.2",
+        "predis/predis": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EmbroideryConverter\\": "src/"
+        }
+    }
+}
