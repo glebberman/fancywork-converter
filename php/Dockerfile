@@ -20,9 +20,11 @@ RUN if [ -f composer.lock ]; then \
 # Копируем код приложения
 COPY . .
 
-# Создаем директории для storage
+# Создаем директории для storage и устанавливаем правильные права
 RUN mkdir -p /var/www/storage/uploads /var/www/storage/processing /var/www/storage/results && \
-    chown -R www-data:www-data /var/www/storage
+    chown -R www-data:www-data /var/www/storage && \
+    chmod -R 755 /var/www/public && \
+    chown -R www-data:www-data /var/www
 
 EXPOSE 9000
 

@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./php/public:/var/www/html:ro
+      - ./php:/var/www:ro
       - shared-storage:/var/www/storage
     depends_on:
       - php
