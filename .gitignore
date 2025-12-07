@@ -1,0 +1,36 @@
+# Environment variables
+.env
+
+# Storage directories
+php/storage/uploads/*
+php/storage/processing/*
+php/storage/results/*
+!php/storage/.gitkeep
+!php/storage/uploads/.gitkeep
+!php/storage/processing/.gitkeep
+!php/storage/results/.gitkeep
+
+# PHP dependencies
+php/vendor/
+php/composer.lock
+
+# Python dependencies
+python/__pycache__/
+python/*.pyc
+python/.pytest_cache/
+
+# Docker volumes
+.docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
